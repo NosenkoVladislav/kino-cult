@@ -1,4 +1,5 @@
 import React from "react";
+import ReactPlayer from "react-player";
 
 const film =
     {
@@ -20,7 +21,11 @@ const FilmDetail = (props) => {
     return (
         <div className="film-detail-page">
             <div className="player-section">
-
+                <ReactPlayer
+                    url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
+                    light={true}
+                    controls={true}
+                />
             </div>
             <div className="container">
                 <div className="film-info">
