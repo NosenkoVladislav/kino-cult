@@ -1,5 +1,7 @@
 $yellow-main: #ffde2d;
 $background-main: #1d1d1d;
+$gray-light: #373737;
+
 * {
   box-sizing: border-box;
 }
@@ -32,7 +34,7 @@ html {
     font-size: 16px;
     text-align: center;
     margin-left: 5rem;
-    color: #000;
+    color: $background-main;
     padding: 20px;
 
     &:last-child {
@@ -54,15 +56,15 @@ html {
   font-size: 46px;
   line-height: 1;
   color: #fff;
+  display: inline-block;
+  position: relative;
+  padding: 15px 0;
 }
 
 .section-title-link {
   text-decoration: none;
   color: inherit;
   transition: ease-in-out .2s;
-  &:hover {
-    color: $yellow-main;
-  }
 }
 
 .grid-content {
@@ -93,6 +95,7 @@ html {
   transition: ease-in-out .3s;
   overflow: hidden;
   height: 100%;
+  text-decoration: none;
   &.archive {
     .film-image {
       filter: grayscale(1);
@@ -223,6 +226,39 @@ html {
     .about {
       opacity: 1;
       transition-delay: .1s;
+    }
+  }
+}
+
+.film-detail-page {
+  .film-info {
+    display: grid;
+    grid-template-columns: .4fr .6fr;
+    grid-gap: 40px;
+  }
+  .film-info-section  {
+    padding: 15px;
+    &.film-info-section__contacts {
+      background: $gray-light;
+    }
+  }
+  .info-block {
+    color: #fff;
+    margin-bottom: 30px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    .info-title {
+      color: $yellow-main;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 15px;
+    }
+    .info-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.3;
     }
   }
 }

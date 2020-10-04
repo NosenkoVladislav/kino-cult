@@ -1,4 +1,5 @@
 import React, {useRef} from "react";
+import {NavLink} from "react-router-dom";
 import img from "../images/filmThumb.png";
 import {gsap} from "gsap";
 
@@ -38,7 +39,7 @@ const FilmThumb = ({film}) => {
     };
 
     return (
-        <div className={`film-thumb ${film.archive ? "archive" : null}`}
+        <NavLink to={`/film/${film.id}`} className={`film-thumb ${film.archive ? "archive" : null}`}
              onMouseOver={mouseOver}
              onMouseLeave={mouseLeave}
         >
@@ -82,8 +83,7 @@ const FilmThumb = ({film}) => {
                         <div className="film-year">{film.year}</div>
                     </div>
             }
-
-        </div>
+        </NavLink>
     )
 };
 
