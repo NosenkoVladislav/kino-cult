@@ -1,5 +1,5 @@
 import React from "react";
-import {NavLink} from "react-router-dom";
+import {NavLink, useLocation} from "react-router-dom";
 import {ReactComponent as Logo} from "../svg/logoKinoCult.svg";
 
 const navItems = [
@@ -8,9 +8,12 @@ const navItems = [
     {to: "/archive", text: "Архів"},
 ];
 
-const Navbar = () => {
+
+
+const Navbar = (props) => {
+    const path = useLocation().pathname.slice(1, 5);
     return (
-        <div className="nav-bar-wrap">
+        <div className={`nav-bar-wrap ${path === "film" ? "transparent" : ""}`}>
             <div className="container">
                 <div className="nav-bar">
                     <NavLink

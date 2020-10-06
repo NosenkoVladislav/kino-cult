@@ -203,7 +203,7 @@ const films = [
 function App() {
     return (
         <div className="App">
-            <Navbar/>
+            <Navbar />
 
             <Route path="/" exact>
                 <Main films={films}/>

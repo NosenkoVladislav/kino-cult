@@ -1,5 +1,6 @@
 import React from "react";
-import ReactPlayer from "react-player";
+import Player from "../components/player";
+
 
 const film =
     {
@@ -14,18 +15,15 @@ const film =
         image: "images/filmThumb.png",
         country: "Франція",
         achievements: "",
-        archive: false
+        archive: false,
+        video: "https://tv.suspilne.media/uploads/video/2020/09/22/ddf197e316b9039f59b643dee572cc13.mp4"
     };
 
 const FilmDetail = (props) => {
     return (
         <div className="film-detail-page">
             <div className="player-section">
-                <ReactPlayer
-                    url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
-                    light={true}
-                    controls={true}
-                />
+                <Player film={film}/>
             </div>
             <div className="container">
                 <div className="film-info">

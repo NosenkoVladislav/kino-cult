@@ -19,6 +19,15 @@ html {
 
 .nav-bar-wrap {
   background: $yellow-main;
+  transition: ease-in-out .2s;
+  &.transparent {
+    background: transparent;
+    .nav-bar {
+      .nav-item {
+        color: #fff;
+      }
+    }
+  }
 }
 
 .nav-bar {
@@ -261,4 +270,8 @@ html {
       line-height: 1.3;
     }
   }
+}
+
+.player-section {
+
 }
