@@ -1,224 +1,58 @@
-import React from 'react';
-import './App.scss';
-import {Route} from "react-router-dom";
-import Navbar from "./components/navbar";
-import Main from "./pages/main";
-import FilmDetail from "./pages/film-detail";
-import Archive from "./pages/archive";
+import React, { useState, useEffect } from "react";
+import { Route } from "react-router-dom";
+import Navbar from "./components/Header/Header";
+import Main from "./pages/Main";
+import Archive from "./pages/Archive";
+import Winners from "./pages/Winners";
+import MovieDetail from "./pages/Movie-detail";
+import "./App.scss";
+import Service from "./service/service";
 
-const films = [
-    {
-        id: 1,
-        genre: "драма",
-        name: "Брати. Остання сповідь ",
-        year: "2020",
-        duration: "123 хв",
-        director: "Вікторія Трохименко",
-        roles: "Ґольшіфтег Фарагані, Мадж Мастура, Айша Бен Мілед",
-        about: "Історія любові та ненависті двох братів, які доживають віку в карпатському селі. Історія любові та ненависті двох братів, які доживають віку в карпатському селі.",
-        image: "images/filmThumb.png",
-        country: "Франція",
-        achievements: "",
-        archive: false
-    },
-    {
-        id: 2,
-        genre: "трилер",
-        name: "Олдбой ",
-        year: "2013",
-        duration: "110 хв",
-        director: "Спайк Лі",
-        roles: "Джош Бролін, Шарлто Коплі, Елізабет Олсен, Семюел Л. Джексон, Майкл Імперіолі, Пом Клементьефф, Джеймс Рэнсон, Макс Казелла, Лінда Эмонд, Елвіс Ноласко",
-        about: "Фільм розповідає про рекламника, якого хтось викрав і 20 років протримав в одиночній камері, ніяк не пояснюючи своїх мотивів. Настільки ж несподівано отримавши одного разу свободу, він вирішує розшукати того, хто організував його викрадення, і виявляє, що невідомий злодій продовжує мучити його загадками.",
-        image: "images/filmThumb.png",
-        country: "Франція",
-        achievements: "",
-        archive: false
-
-    },
-    {
-        id: 3,
-        genre: "детектив",
-        name: "Анабель",
-        year: "2014",
-        duration: "110 хв",
-        director: "Джон Р. Леонетті",
-        roles: "Аннабелль Уолліс, Уорд Хортон, Элфри Вудард, Тоні Амендола, Ерік Ладен, Керрі О'меллі, Брайан Хау, Івар Броггер, Джофф Уэнер, Гебріел Бейтман",
-        about: "Джон Форм знайшов чудовий подарунок для своєї вагітної дружини Міа - прекрасну, дуже рідкісну вінтажну ляльку в білій шлюбній сукні. Але радість Міа від подарунка була недовгою.",
-        image: "images/filmThumb.png",
-        country: "Франція",
-        achievements: "",
-        archive: false
-
-    },
-    {
-        id: 4,
-        genre: "драма",
-        name: "Брати. Остання сповідь 2",
-        year: "2020",
-        duration: "123 хв",
-        director: "Вікторія Трохименко",
-        roles: "Ґольшіфтег Фарагані, Мадж Мастура, Айша Бен Мілед",
-        about: "Історія любові та ненависті двох братів, які доживають віку в карпатському селі.",
-        image: "images/filmThumb.png",
-        country: "Франція",
-        achievements: "",
-        archive: false
-
-    },
-    {
-        id: 5,
-        genre: "трилер",
-        name: "Олдбой 2",
-        year: "2013",
-        duration: "110 хв",
-        director: "Спайк Лі",
-        roles: "Джош Бролін, Шарлто Коплі, Елізабет Олсен, Семюел Л. Джексон, Майкл Імперіолі, Пом Клементьефф, Джеймс Рэнсон, Макс Казелла, Лінда Эмонд, Елвіс Ноласко",
-        about: "Фільм розповідає про рекламника, якого хтось викрав і 20 років протримав в одиночній камері, ніяк не пояснюючи своїх мотивів. Настільки ж несподівано отримавши одного разу свободу, він вирішує розшукати того, хто організував його викрадення, і виявляє, що невідомий злодій продовжує мучити його загадками.",
-        image: "images/filmThumb.png",
-        country: "Франція",
-        achievements: "",
-        archive: false
-
-    },
-    {
-        id: 6,
-        genre: "детектив",
-        name: "Анабель 2",
-        year: "2014",
-        duration: "110 хв",
-        director: "Джон Р. Леонетті",
-        roles: "Аннабелль Уолліс, Уорд Хортон, Элфри Вудард, Тоні Амендола, Ерік Ладен, Керрі О'меллі, Брайан Хау, Івар Броггер, Джофф Уэнер, Гебріел Бейтман",
-        about: "Джон Форм знайшов чудовий подарунок для своєї вагітної дружини Міа - прекрасну, дуже рідкісну вінтажну ляльку в білій шлюбній сукні. Але радість Міа від подарунка була недовгою.",
-        image: "images/filmThumb.png",
-        country: "Франція",
-        achievements: "",
-        archive: false
-
-    },
-    {
-        id: 7,
-        genre: "драма",
-        name: "Брати. Остання сповідь 3",
-        year: "2020",
-        duration: "123 хв",
-        director: "Вікторія Трохименко",
-        roles: "Ґольшіфтег Фарагані, Мадж Мастура, Айша Бен Мілед",
-        about: "Історія любові та ненависті двох братів, які доживають віку в карпатському селі. Історія любові та ненависті двох братів, які доживають віку в карпатському селі.",
-        image: "images/filmThumb.png",
-        country: "Франція",
-        achievements: "",
-        archive: false
-
-    },
-    {
-        id: 8,
-        genre: "трилер",
-        name: "Олдбой 3",
-        year: "2013",
-        duration: "110 хв",
-        director: "Спайк Лі",
-        roles: "Джош Бролін, Шарлто Коплі, Елізабет Олсен, Семюел Л. Джексон, Майкл Імперіолі, Пом Клементьефф, Джеймс Рэнсон, Макс Казелла, Лінда Эмонд, Елвіс Ноласко",
-        about: "Фільм розповідає про рекламника, якого хтось викрав і 20 років протримав в одиночній камері, ніяк не пояснюючи своїх мотивів. Настільки ж несподівано отримавши одного разу свободу, він вирішує розшукати того, хто організував його викрадення, і виявляє, що невідомий злодій продовжує мучити його загадками.",
-        image: "images/filmThumb.png",
-        country: "Франція",
-        achievements: "",
-        archive: false
-
-    },
-    {
-        id: 9,
-        genre: "детектив",
-        name: "Анабель 3",
-        year: "2014",
-        duration: "110 хв",
-        director: "Джон Р. Леонетті",
-        roles: "Аннабелль Уолліс, Уорд Хортон, Элфри Вудард, Тоні Амендола, Ерік Ладен, Керрі О'меллі, Брайан Хау, Івар Броггер, Джофф Уэнер, Гебріел Бейтман",
-        about: "Джон Форм знайшов чудовий подарунок для своєї вагітної дружини Міа - прекрасну, дуже рідкісну вінтажну ляльку в білій шлюбній сукні. Але радість Міа від подарунка була недовгою.",
-        image: "images/filmThumb.png",
-        country: "Франція",
-        achievements: "",
-        archive: false
-    },
-    {
-        id: 10,
-        genre: "драма",
-        name: "Брати. Остання сповідь 4 Брати. Остання сповідь 4 Брати. Остання сповідь 4",
-        year: "2020",
-        duration: "123 хв",
-        director: "Вікторія Трохименко",
-        roles: "Ґольшіфтег Фарагані, Мадж Мастура, Айша Бен Мілед",
-        about: "Історія любові та ненависті двох братів, які доживають віку в карпатському селі. Історія любові та ненависті двох братів, які доживають віку в карпатському селі.",
-        image: "images/filmThumb.png",
-        country: "Франція",
-        achievements: "",
-        archive: false
-
-    },
-    {
-        id: 11,
-        genre: "трилер",
-        name: "Олдбой 4",
-        year: "2013",
-        duration: "110 хв",
-        director: "Спайк Лі",
-        roles: "Джош Бролін, Шарлто Коплі, Елізабет Олсен, Семюел Л. Джексон, Майкл Імперіолі, Пом Клементьефф, Джеймс Рэнсон, Макс Казелла, Лінда Эмонд, Елвіс Ноласко",
-        about: "Фільм розповідає про рекламника, якого хтось викрав і 20 років протримав в одиночній камері, ніяк не пояснюючи своїх мотивів. Настільки ж несподівано отримавши одного разу свободу, він вирішує розшукати того, хто організував його викрадення, і виявляє, що невідомий злодій продовжує мучити його загадками.",
-        image: "images/filmThumb.png",
-        country: "Франція",
-        achievements: "",
-        archive: false
-
-    },
-    {
-        id: 12,
-        genre: "детектив",
-        name: "Анабель 4",
-        year: "2019",
-        duration: "110 хв",
-        director: "Джон Р. Леонетті",
-        roles: "Аннабелль Уолліс, Уорд Хортон, Элфри Вудард, Тоні Амендола, Ерік Ладен, Керрі О'меллі, Брайан Хау, Івар Броггер, Джофф Уэнер, Гебріел Бейтман",
-        about: "Джон Форм знайшов чудовий подарунок для своєї вагітної дружини Міа - прекрасну, дуже рідкісну вінтажну ляльку в білій шлюбній сукні. Але радість Міа від подарунка була недовгою.",
-        image: "images/filmThumb.png",
-        country: "Франція",
-        achievements: "",
-        archive: true
-    },
-    {
-        id: 13,
-        genre: "драма",
-        name: "Анабель",
-        year: "2018",
-        duration: "110 хв",
-        director: "Джон Р. Леонетті",
-        roles: "Аннабелль Уолліс, Уорд Хортон, Элфри Вудард, Тоні Амендола, Ерік Ладен, Керрі О'меллі, Брайан Хау, Івар Броггер, Джофф Уэнер, Гебріел Бейтман",
-        about: "Джон Форм знайшов чудовий подарунок для своєї вагітної дружини Міа - прекрасну, дуже рідкісну вінтажну ляльку в білій шлюбній сукні. Але радість Міа від подарунка була недовгою.",
-        image: "images/filmThumb.png",
-        country: "Франція",
-        achievements: "",
-        archive: true
-    }
-];
 
 function App() {
-    return (
-        <div className="App">
-            <Navbar />
+  const [isMoviePlay, switchMoviePlay] = useState(false);
+  const [movies, setMovies] = useState([]);
+  const [userData, setUserData] = useState(null);
+  const api = new Service();
 
-            <Route path="/" exact>
-                <Main films={films}/>
-            </Route>
-            <Route path="/winners-2019" exact>
-                Winners 2019
-            </Route>
-            <Route path="/archive" exact>
-                <Archive films={films}/>
-            </Route>
-            <Route path="/film/:id" exact>
-                <FilmDetail films={films}/>
-            </Route>
-        </div>
-    );
+  useEffect(() => {
+    api.getMovies().then((movies) => {
+      setMovies(movies);
+    });
+
+    if(localStorage.getItem("userID")) {
+      setUserData({userID :localStorage.getItem("userID")});
+    }
+  }, []);
+
+  const moviePlayHandler = () => {
+    switchMoviePlay(!isMoviePlay);
+  };
+
+  return (
+    <div className="app">
+      <Navbar isMoviePlay={isMoviePlay} />
+      <Route path="/" exact render={() => <Main movies={movies} />} />
+      <Route
+        path="/winners"
+        exact
+        render={() => <Winners  movies={movies}/>}
+      />
+      <Route path="/archive" exact render={() => <Archive movies={movies} />} />
+      <Route
+        path="/movie/:id"
+        exact
+        render={({ match }) => (
+          <MovieDetail
+            match={match}
+            moviePlayHandler={moviePlayHandler}
+            userData={userData}
+            setUserData={setUserData}
+          />
+        )}
+      />
+    </div>
+  );
 }
 
 export default App;
